@@ -35,6 +35,7 @@
         <form action="###" class="searchForm">
           <input
             type="text"
+            v-model="searchText"
             id="autocomplete"
             class="input-error input-xxlarge"
           />
@@ -54,10 +55,23 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      searchText: "",
+    };
+  },
   methods: {
     search() {
-      this.$router.push("/search");
+      const { searchText } = this;
+      const params = searchText ? `/${searchText}` : "";
+      const localaction = "/search" + params;
+      this.$router.push(localaction);
     },
+  },
+  mounted() {
+    /*  console.log(this);
+    console.log(this.$router);
+    console.log(this.$route); */
   },
 };
 </script>
