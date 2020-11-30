@@ -55,7 +55,7 @@ export default new VueRouter({
         },
         {
             name: "search", //这里没有定义，定义URL地址parmas时会出现错误
-            path: "/search/:serachText?",
+            path: "/search/:searchText?",
             component: Search
         }
     ]
