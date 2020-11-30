@@ -14,7 +14,7 @@
         <a href="###">秒杀</a>
       </nav>
       <div class="sort">
-        <div class="all-sort-list2">
+        <div class="all-sort-list2" @click="goSearch">
           <div
             class="item bo"
             v-for="category in categoryList"
@@ -22,7 +22,12 @@
           >
             <h3>
               <!-- 一级分类名称 -->
-              <a href="">{{ category.categoryName }}</a>
+              <a
+                :data-categoryName="category.categoryName"
+                :data-categoryId="category.categoryId"
+                :data-categoryType="1"
+                >{{ category.categoryName }}</a
+              >
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
@@ -33,7 +38,12 @@
                 >
                   <dt>
                     <!-- 二级分类名称 -->
-                    <a href="">{{ child.categoryName }}</a>
+                    <a
+                      :data-categoryName="child.categoryName"
+                      :data-categoryId="child.categoryId"
+                      :data-categoryType="2"
+                      >{{ child.categoryName }}</a
+                    >
                   </dt>
                   <dd>
                     <!-- 三级分类名称 -->
@@ -41,7 +51,12 @@
                       v-for="grandChild in child.categoryChild"
                       :key="grandChild.categoryId"
                     >
-                      <a href="">{{ grandChild.categoryName }}</a>
+                      <a
+                        :data-categoryName="grandChild.categoryName"
+                        :data-categoryId="grandChild.categoryId"
+                        :data-categoryType="3"
+                        >{{ grandChild.categoryName }}</a
+                      >
                     </em>
                   </dd>
                 </dl>
@@ -65,7 +80,28 @@ export default {
     }),
   },
   methods: {
+    // 函数直接写
+    // 注意：将来action函数名称和mutation函数名称不要重复
     ...mapActions(["getCategoryList"]),
+    // 跳转到search
+    goSearch(e) {
+      const { categoryname, categoryid, categorytype } = e.target.dataset; // 元素自定义属性对象
+
+      // 需求：如何获取需要的参数？
+      // 已知：得到触发事件目标元素
+      // 解决：给元素设置自定义属性 data-xxx, 通过自定义属性得到需要的参数
+
+      // 判断是否是点中了a标签，才能跳转
+      if (!categoryname) return;
+
+      this.$router.push({
+        name: "search",
+        query: {
+          categoryName: categoryname,
+          [`category${categorytype}Id`]: categoryid,
+        },
+      });
+    },
   },
   mounted() {
     this.getCategoryList();

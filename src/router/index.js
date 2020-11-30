@@ -6,7 +6,7 @@ import Login from '../views/Login';
 import Register from '../views/Register';
 import Search from '../views/Search';
 
-Vue.use(VueRouter);
+
 
 //重写push和replace方法
 //目的：为了让编程式导航重复点击时不再报错
@@ -30,7 +30,7 @@ VueRouter.prototype.replace = function (localaction, onComplete, onAbort) {
     //如果用户想不处理失败，给默认值：空函数
     return replace.call(this, localaction, onComplete, () => {})
 }
-
+Vue.use(VueRouter);
 
 export default new VueRouter({
     routes: [{
@@ -54,6 +54,7 @@ export default new VueRouter({
             }
         },
         {
+            name: "search", //这里没有定义，定义URL地址parmas时会出现错误
             path: "/search/:serachText?",
             component: Search
         }
