@@ -55,18 +55,20 @@
 </template>
 
 <script>
-import { reqGetBaseCategoryList } from "@api/home";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "TypeNav",
-  data() {
-    return {
-      categoryList: [],
-    };
+  computed: {
+    ...mapState({
+      categoryList: (state) => state.home.categoryList,
+    }),
   },
-  async mounted() {
-    const result = await reqGetBaseCategoryList();
-    this.categoryList = result.slice(0,15)
+  methods: {
+    ...mapActions(["getCategoryList"]),
+  },
+  mounted() {
+    this.getCategoryList();
   },
 };
 </script>
