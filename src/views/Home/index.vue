@@ -12,7 +12,7 @@
     <!--楼层-->
     <Floor :floors="floors" />
     <!--楼层-->
-    <Floor />
+    <Floor :floors="floors"/>
     <!--商标-->
     <Brand />
   </div>

@@ -6,10 +6,10 @@ import floors from './rfloors'
 
 Mock.mock("/mock/banners", "get", {
     code: 200,
-    "data|4": banners
+    "data|1": [banners]
 })
 
 Mock.mock("/mock/floors", "get", {
     code: 200,
-    "data|2": floors
+    "data|1": [floors]
 })
