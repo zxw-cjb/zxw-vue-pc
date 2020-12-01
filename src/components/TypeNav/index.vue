@@ -126,6 +126,7 @@ export default {
     },
   },
   mounted() {
+    if (this.categoryList.length) return; 
     this.getCategoryList();
   },
 };

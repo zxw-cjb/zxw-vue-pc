@@ -3,40 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
-          <!-- <div
-            class="swiper-wrapper"
-            v-for="banner in banners"
-            :key="banner.id"  遍历数据
-          > -->
-          <div
-            class="swiper-wrapper"
-            v-for="banner in banners"
-            :key="banner.id"
-          >
-            <!-- <div class="swiper-slide">
-              <img :src="banner.imgUrl" />
-            </div> 将URL地址转换到上面-->
-            <div class="swiper-slide">
-              <img :src="banner.imgUrl" />
-            </div>
-            <!-- <div class="swiper-slide">
-              <img src="./images/banner2.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner3.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner4.jpg" />
-            </div> -->
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <Carousel :carouselList="banners" />
       </div>
       <div class="right">
         <div class="news">
@@ -113,6 +80,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Carousel from "@comps/Carousel";
 export default {
   name: "ListContainer",
   computed: {
@@ -121,8 +89,32 @@ export default {
   methods: {
     ...mapActions(["getBanners"]),
   },
-  mounted() {
-    this.getBanners();
+  async mounted() {
+    await this.getBanners();
+    //方案一
+    // setTimeout(() => {
+    //   new Swiper(".swiper-container", {
+    //     // Optional parameters
+    //     loop: true,
+
+    //     // If we need pagination
+    //     pagination: {
+    //       el: ".swiper-pagination",
+    //     },
+
+    //     // Navigation arrows
+    //     navigation: {
+    //       nextEl: ".swiper-button-next",
+    //       prevEl: ".swiper-button-prev",
+    //     },
+    //   });
+    // }, 1000);
+
+    //方案二
+    //this.$nextTick(()=>{}).等当前页面加载完毕，调用括号中的回调函数
+  },
+  components: {
+    Carousel,
   },
 };
 </script>
