@@ -38,7 +38,9 @@
             v-model="searchText"
             id="autocomplete"
             class="input-error input-xxlarge"
+            autocomplete="off"
           />
+          <!-- autocomplete="value" value=on/off autocomplete 属性规定输入字段是否应该启用自动完成功能-->
           <button
             @click="search"
             class="sui-btn btn-xlarge btn-danger"
@@ -78,13 +80,17 @@ export default {
         location.query = this.$route.query;
       }
 
-      this.$router.push(location);
+      if (this.$route.name === "search") {
+        this.$router.replace(location);
+      } else {
+        this.$router.push(location);
+      }
     },
   },
   mounted() {
-    /*  console.log(this);
-    console.log(this.$router);
-    console.log(this.$route); */
+    this.$bus.$on("clearKeyword", () => {
+      this.searchText = "";
+    });
   },
 };
 </script>
