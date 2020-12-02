@@ -13,6 +13,9 @@ import './plugins/element.js'
 //里面的代码一但加载，就去启动mock服务器，从而拦截相应的请求
 import './mock/mokeServer'
 
+//引入iconfont图标
+import './styles/iconfont.css'
+
 Vue.config.productionTip = false
 
 /* esline-disable no-new */
