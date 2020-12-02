@@ -139,35 +139,18 @@
             </ul>
           </div>
           <!-- 上一页，下一页部分 -->
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <el-pagination
+            background
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="options.pageNo"
+            :pager-count="7"
+            :page-sizes="[10, 15, 20, 25]"
+            :page-size="10"
+            layout="prev, pager, next, jumper,sizes,total"
+            :total="total"
+          >
+          </el-pagination>
         </div>
       </div>
     </div>
@@ -206,12 +189,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["goodsList"]),
+    ...mapGetters(["goodsList", "total"]),
   },
   methods: {
     ...mapActions(["getProductList"]),
     // 更新商品列表
-    updateProductList() {
+    updateProductList(pageNo = 1) {
       const { searchText: keyword } = this.$route.params;
       const {
         categoryName,
@@ -227,6 +210,7 @@ export default {
         category1Id,
         category2Id,
         category3Id,
+        pageNo,
       };
 
       this.options = options;
@@ -306,6 +290,20 @@ export default {
 
       this.options.order = `${order}:${orderType}`;
       this.updateProductList();
+    },
+
+    //当每条页数发生变化时触发
+    handleSizeChange(pageSize) {
+      // console.log("pageSize", pageSize);
+      this.options.pageSize = pageSize;
+      this.updateProductList();
+    },
+
+    //当页码发生变化时触发
+    handleCurrentChange(pageNo) {
+      // console.log("pageNo", pageNo);
+      // this.options.pageNo = pageNo;
+      this.updateProductList(pageNo);
     },
   },
   mounted() {
