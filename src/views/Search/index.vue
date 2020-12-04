@@ -100,9 +100,9 @@
               <li class="yui3-u-1-5" v-for="goods in goodsList" :key="goods.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
-                      ><img :src="goods.defaultImg"
-                    /></a>
+                    <router-link :to="`/detail/${goods.id}`"
+                      ><a><img :src="goods.defaultImg" /></a
+                    ></router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -111,12 +111,9 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a
-                      target="_blank"
-                      href="item.html"
-                      title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
-                      >{{ goods.title }}
-                    </a>
+                    <router-link :to="`/detail/${goods.id}`">
+                      <a>{{ goods.title }} </a>
+                    </router-link>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
@@ -137,18 +134,25 @@
             </ul>
           </div>
           <!-- 上一页，下一页部分 -->
-          <el-pagination
+          <Pagination
+            @current-change="handleCurrentChange"
+            :current-page="options.pageNo"
+            :pager-count="7"
+            :page-size="5"
+            :total="total"
+          />
+          <!-- <el-pagination
             background
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="options.pageNo"
             :pager-count="7"
-            :page-sizes="[10, 15, 20, 25]"
-            :page-size="10"
+            :page-sizes="[5, 10, 15, 20]"
+            :page-size="5"
             layout="prev, pager, next, jumper,sizes,total"
             :total="total"
           >
-          </el-pagination>
+          </el-pagination> -->
         </div>
       </div>
     </div>
@@ -159,6 +163,8 @@
 import { mapActions, mapGetters } from "vuex";
 import SearchSelector from "./SearchSelector/SearchSelector";
 import TypeNav from "@comps/TypeNav";
+import Pagination from "@comps/Pagination";
+
 export default {
   name: "Search",
   data() {
@@ -319,6 +325,7 @@ export default {
   components: {
     SearchSelector,
     TypeNav,
+    Pagination,
   },
 };
 </script>
