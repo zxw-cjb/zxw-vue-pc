@@ -26,34 +26,11 @@
             :key="index"
             @click="
               $listeners['add-prop'](
-                `${attrs.attrId}:${attrs}:${attrs.attrName}`
+                `${attrs.attrId}:${attr}:${attrs.attrName}`
               )
             "
           >
             <a>{{ attr }}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="fl ext"></div>
-    </div>
-    <div class="type-wrap">
-      <div class="fl key">更多筛选项</div>
-      <div class="fl value">
-        <ul class="type-list">
-          <li>
-            <a>特点</a>
-          </li>
-          <li>
-            <a>系统</a>
-          </li>
-          <li>
-            <a>手机内存 </a>
-          </li>
-          <li>
-            <a>单卡双卡</a>
-          </li>
-          <li>
-            <a>其他</a>
           </li>
         </ul>
       </div>

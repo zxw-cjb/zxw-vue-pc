@@ -45,7 +45,7 @@
             <div class="navbar-inner filter">
               <ul class="sui-nav">
                 <li
-                  :class="{ active: options.order.indexOf('1') > -1 }"
+                  :class="{ active: isOrder('1') > -1 }"
                   @click="setOrder('1')"
                 >
                   <a
@@ -68,7 +68,7 @@
                   <a>评价</a>
                 </li>
                 <li
-                  :class="{ active: options.order.indexOf('2') > -1 }"
+                  :class="{ active: isOrder('2') > -1 }"
                   @click="setOrder('2')"
                 >
                   <a>
@@ -78,16 +78,14 @@
                         :class="{
                           iconfont: true,
                           'icon-arrow-up': true,
-                          deactive:
-                            options.order.indexOf('2') > -1 && isPriceDown,
+                          deactive: isOrder('2') > -1 && isPriceDown,
                         }"
                       ></i>
                       <i
                         :class="{
                           iconfont: true,
                           'icon-arrow-down': true,
-                          deactive:
-                            options.order.indexOf('2') > -1 && !isPriceDown,
+                          deactive: isOrder('2') > -1 && !isPriceDown,
                         }"
                       ></i>
                     </span>
@@ -253,6 +251,7 @@ export default {
 
     //添加品牌数据并更新数据
     addProp(prop) {
+      if (this.options.props.indexOf(prop) > -1) return;
       this.options.props.push(prop);
       this.updateProductList();
     },
@@ -304,6 +303,11 @@ export default {
       // console.log("pageNo", pageNo);
       // this.options.pageNo = pageNo;
       this.updateProductList(pageNo);
+    },
+
+    //判断order以xxx开头
+    isOrder(order) {
+      return this.options.order.indexOf(order) > -1;
     },
   },
   mounted() {
