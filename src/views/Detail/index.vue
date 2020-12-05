@@ -101,11 +101,15 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <el-input-number
+                  class="input-number"
+                  v-model="skuNum"
+                  controls-position="right"
+                  :min="1"
+                  :max="100"
+                ></el-input-number>
               </div>
-              <div class="add">
+              <div class="add" @click="addCart">
                 <a href="javascript:">加入购物车</a>
               </div>
             </div>
@@ -356,15 +360,30 @@ export default {
   data() {
     return {
       currentImgIndex: 0, // 当前选中图片的下标
+      skuNum: 1, // 商品数量
     };
   },
   computed: {
     ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
   },
   methods: {
-    ...mapActions(["getProductDetail"]),
+    ...mapActions(["getProductDetail","updateCartCount"]),
     updateCurrentImgIndex(index) {
       this.currentImgIndex = index;
+    },
+
+    //加入购物车
+    async addCart() {
+      try {
+        await this.updateCartCount({
+          skuId: this.skuInfo.id,
+          skuNum: this.skuNum,
+        });
+        //一旦加入购物车，跳转到加入购物车成功页面
+        this.$router.push(`/addcartsuccess?skuNum=${this.skuNum}`);
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
   mounted() {
@@ -547,6 +566,10 @@ export default {
               float: left;
               margin-right: 15px;
 
+              .input-number {
+                width: 150px;
+              }
+
               .itxt {
                 width: 38px;
                 height: 37px;
@@ -583,6 +606,7 @@ export default {
 
             .add {
               float: left;
+              margin-left: 100px;
 
               a {
                 background-color: #e1251b;

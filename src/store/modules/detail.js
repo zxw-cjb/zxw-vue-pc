@@ -7,7 +7,9 @@ export default {
     state: {
         productDetail: {
             categoryView: {},
-            skuInfo: {},
+            skuInfo: {
+                skuImageList: [],
+            }, // 商品详情数据
             spuSaleAttrList: {}
         }
     },
@@ -23,9 +25,11 @@ export default {
         }
     },
     actions: {
-        async getProductDetail({ commit } , id){
+        async getProductDetail({
+            commit
+        }, id) {
             const productDetail = await reqGetProductDetail(id)
-            commit("GET_PRODUCTION_DETAIL",productDetail)
+            commit("GET_PRODUCTION_DETAIL", productDetail)
         }
     },
     mutations: {
