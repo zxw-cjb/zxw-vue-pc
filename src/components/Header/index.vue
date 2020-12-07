@@ -6,7 +6,12 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <p v-if="$store.state.user.name">
+            <span>{{ $store.state.user.name }}</span>
+            &nbsp;
+            <button @click="exit">退出</button>
+          </p>
+          <p v-else>
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
@@ -85,6 +90,10 @@ export default {
       } else {
         this.$router.push(location);
       }
+    },
+    exit() {
+      this.$store.state.user.name = "";
+      this.$router.push("/login");
     },
   },
   mounted() {

@@ -8,7 +8,10 @@ import Search from '../views/Search';
 import Detail from '@views/Detail'
 import ShopCart from '@views/ShopCart'
 import AddCartSuccess from '@views/AddCartSuccess'
-
+import Trade from '@views/Trade'
+import Pay from '@views/Pay'
+import PaySuccess from '@views/PaySuccess'
+import Center from '@views/Center'
 
 
 //重写push和replace方法
@@ -76,6 +79,30 @@ export default new VueRouter({
             name: "addcartsuccess",
             path: "/addcartsuccess",
             component: AddCartSuccess
+        },
+        //核对订单信息
+        {
+            name: "trade",
+            path: "/trade",
+            component: Trade
+        },
+        //提交订单
+        {
+            name: "pay",
+            path: "/pay",
+            component: Pay
+        },
+        //支付成功页面
+        {
+            name: "paysuccess",
+            path: "/paysuccess",
+            component: PaySuccess
+        },
+        //查看其他订单页面
+        {
+            name: "center",
+            path: "/center",
+            component: Center
         },
     ],
 
