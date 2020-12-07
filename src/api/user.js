@@ -1,6 +1,5 @@
 import request from "@utils/request";
 
-
 // 封装一个发送请求的功能函数
 export const reqLogin = (phone, password) => {
   // 将request的返回值返回出去
@@ -14,5 +13,19 @@ export const reqLogin = (phone, password) => {
       password,
     },
     // params: {}, // 放置查询字符串参数，通常get请求
+  });
+};
+
+// 注册
+//3个参数及以上使用对象的方法传参会更好
+export const reqRegister = ({phone, password,code}) => {
+  return request({
+    method: "POST",
+    url: "/user/passport/register",
+    data: {
+      phone,
+      password,
+      code
+    },
   });
 };
