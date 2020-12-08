@@ -33,13 +33,13 @@ export default {
   beforeRouteEnter: (to, from, next) => {
     //注意：没有this
     //从vue中读取数据：1.store  2.通过next访问this
-    next((vm) => {
-      console.log(vm);
+    next(() => {
+      // console.log(vm);
       if (from.name === "detail" && sessionStorage.getItem("cart")) {
         return next();
       }
 
-      next("showcart");
+      next("shopcart");
     });
   },
 };

@@ -11,7 +11,7 @@ import {
   Message,
 } from "element-ui"
 import getUserTempId from "@utils/getUserTempId";
-
+import store from "../store";
 //引入进度条
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -39,6 +39,11 @@ instance.interceptors.request.use(
 
     //开始进度条
     NProgress.start();
+
+    const token = store.state.user.token;
+    if (token) {
+      config.headers.token = token;
+    }
 
     config.headers.userTempId = userTempId;
 
