@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from "../store";
 
 import Home from '../views/Home';
 import Login from '../views/Login';
@@ -12,6 +13,7 @@ import Trade from '@views/Trade'
 import Pay from '@views/Pay'
 import PaySuccess from '@views/PaySuccess'
 import Center from '@views/Center'
+
 
 
 //重写push和replace方法
@@ -38,7 +40,7 @@ VueRouter.prototype.replace = function (localaction, onComplete, onAbort) {
 }
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
     routes: [{
             path: "/",
             component: Home
@@ -78,7 +80,19 @@ export default new VueRouter({
         {
             name: "addcartsuccess",
             path: "/addcartsuccess",
-            component: AddCartSuccess
+            component: AddCartSuccess,
+            //路由独享守卫,只有当在detail页面添加到了购物车才可以访问addcartsuccess页面
+           /*  beforeEnter: (to, from, next) => {
+                console.log(to, from, next);
+                //能看到addcartsuccess页面的条件
+                //1.是从datail中跳转过来的 2.有数据
+                //1.是从detail中跳转过来 2.sessionStorage中有商品的数据
+                if (from.name === "detail" && sessionStorage.getItem("cart")) {
+                    return next()
+                }
+
+                next("/shopcart")
+            } */
         },
         //核对订单信息
         {
@@ -114,3 +128,20 @@ export default new VueRouter({
         }
     }
 })
+
+const permissionPaths = ["/trade", "/pay", "/center"]
+
+router.beforeEach((to, from, next) => {
+    // console.log(to);
+    // console.log(from);
+    // console.log(next);
+    //to.path指url地址上的showcart  paysuccess  pay等等
+    //如果URL地址上有数组中的任意一个，没有登录，不然就跳转到登录页面
+    if (permissionPaths.indexOf(to.path) > -1 && !store.state.user.token) {
+        return next("/login")
+    }
+
+    next()
+})
+
+export default router

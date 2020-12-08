@@ -93,33 +93,21 @@ export default {
         phone: "",
         password: "",
       },
-      isLogining: false, // 正在登录
-      isAutoLogin: true, // 是否自动登录
+      isLogining: false,
+      isAutoLogin: true,
     };
   },
   computed: {
     ...mapState({
       token: (state) => state.user.token,
+      name: (state) => state.user.name,
     }),
   },
-
-  //自动登陆部分
-  // created() {
-  //   /*
-  //     自动登录：
-  //       在login组件判断是否有token
-  //       有就认为登录过，跳转到首页
-
-  //       不够安全：token是可以伪造的
-  //       解决：拿到token发送请求
-  //         1. 验证token的合法性（正确，没有过期）
-  //         2. 请求用户数据
-  //   */
-  //   if (this.token) {
-  //     this.$router.replace("/");
-  //   }
-  // },
-  
+  created() {
+    if (this.token) {
+      this.$router.replace("/");
+    }
+  },
   methods: {
     async submit() {
       try {
@@ -130,6 +118,7 @@ export default {
         // 登录成功
         if (this.isAutoLogin) {
           localStorage.setItem("token", this.token);
+          localStorage.setItem("name", this.name);
         }
         this.$router.replace("/");
       } catch {

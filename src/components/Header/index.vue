@@ -1,5 +1,4 @@
 <template>
-  <!-- 头部 -->
   <header class="header">
     <!-- 头部的第一行 -->
     <div class="top">
@@ -9,7 +8,7 @@
           <p v-if="$store.state.user.name">
             <span>{{ $store.state.user.name }}</span>
             &nbsp;
-            <button @click="exit">退出</button>
+            <button>退出</button>
           </p>
           <p v-else>
             <span>请</span>
@@ -37,22 +36,14 @@
         </router-link>
       </h1>
       <div class="searchArea">
-        <form action="###" class="searchForm">
+        <form class="searchForm" @submit.prevent="search">
           <input
             type="text"
-            v-model="searchText"
             id="autocomplete"
             class="input-error input-xxlarge"
-            autocomplete="off"
+            v-model="searchText"
           />
-          <!-- autocomplete="value" value=on/off autocomplete 属性规定输入字段是否应该启用自动完成功能-->
-          <button
-            @click="search"
-            class="sui-btn btn-xlarge btn-danger"
-            type="button"
-          >
-            搜索
-          </button>
+          <button class="sui-btn btn-xlarge btn-danger">搜索</button>
         </form>
       </div>
     </div>
@@ -64,40 +55,46 @@ export default {
   name: "Header",
   data() {
     return {
+      // 搜索的内容
       searchText: "",
     };
   },
   methods: {
     search() {
       const { searchText } = this;
+      // 编程式导航：原因将来要做搜索功能（要发送请求）
       const location = {
-        name: "search",
+        // path: "/search",
+        name: "search", // 使用命名路由
+        // params: {
+        //   searchText: searchText,
+        // },
+        // query: {
+        // },
       };
+
       if (searchText) {
         location.params = {
           searchText,
         };
       }
 
-      //添加query参数
+      // 添加query参数
       const { categoryName } = this.$route.query;
+
       if (categoryName) {
         location.query = this.$route.query;
       }
-
       if (this.$route.name === "search") {
         this.$router.replace(location);
       } else {
         this.$router.push(location);
       }
     },
-    exit() {
-      this.$store.state.user.name = "";
-      this.$router.push("/login");
-    },
   },
   mounted() {
     this.$bus.$on("clearKeyword", () => {
+      // 清空searchText
       this.searchText = "";
     });
   },

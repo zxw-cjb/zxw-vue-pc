@@ -80,32 +80,6 @@
 // import { mapActions } from 'vuex'
 import { ValidationProvider, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
-/*
-  文档：https://vee-validate.logaretm.com/v3/guide/basics.html#validation-provider
-  1. 下载 
-    yarn add vee-validate
-  2. 引入组件并注册
-    局部注册
-    全局注册
-  3. 使用
-    用 ValidationProvider 组件包裹要表单校验的 表单项  
-  4. 使用检验规则
-    - 自定义规则
-      extend("length", {
-        validate(value) {
-          return value.length === 11;
-        },
-        message: "长度必须为11位", // 错误信息
-      });
-    - 内置规则
-        import { required, email } from 'vee-validate/dist/rules';
-        extend("required", {
-          ...required,
-          message: "手机号必须要填写", // 错误信息
-        });
-
-        <ValidationProvider rules="required"></ValidationProvider>  
-*/
 
 extend("required", {
   ...required,
