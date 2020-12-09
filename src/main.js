@@ -7,6 +7,8 @@ import store from './store'
 import './styles/reset.css'
 
 import './plugins/element.js'
+import './plugins/lazyload'
+
 
 
 //引入mockServer，为了加载里面代码
